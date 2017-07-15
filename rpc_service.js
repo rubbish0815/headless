@@ -7,7 +7,7 @@
 */
 
 "use strict";
-var headlessWallet = require('start.js');
+var headlessWallet = require('./start.js');
 var conf = require('byteballcore/conf.js');
 var eventBus = require('byteballcore/event_bus.js');
 var db = require('byteballcore/db.js');
@@ -22,6 +22,7 @@ if (conf.bSingleAddress)
 function initRPC() {
 	var composer = require('byteballcore/composer.js');
 	var network = require('byteballcore/network.js');
+	var device = require('byteballcore/device.js');
 
 	var rpc = require('json-rpc2');
 	var walletDefinedByKeys = require('byteballcore/wallet_defined_by_keys.js');
@@ -40,6 +41,15 @@ function initRPC() {
 	 */
 	server.expose('getinfo', function(args, opt, cb) {
 		var response = {};
+		response.version = constants.version;
+		response.alt = constants.alt;
+		response.port = conf.port;
+		response.myUrl = conf.myUrl;
+		response.bServeAsHub = conf.bServeAsHub;
+		response.bLight = conf.bLight;
+		response.storage = conf.storage;
+		response.hub = conf.hub;
+		
 		storage.readLastMainChainIndex(function(last_mci){
 			response.last_mci = last_mci;
 			storage.readLastStableMcIndex(db, function(last_stable_mci){
@@ -52,6 +62,23 @@ function initRPC() {
 		});
 	});
 
+	/**
+	 * Send a message.
+	 * @param {String} address
+	 * @param {Integer} message
+	 * @return {String} status
+	 */
+	server.expose('sendMessage', function(args, opt, cb) {
+			// return cb(null, null);
+			var message = args[1];
+			var toDeviceAddress = args[0];
+			if (message && toAddress) {
+				device.sendMessageToDevice(toDeviceAddress, 'text', message);
+			}
+			else
+				cb("wrong parameters");
+	});		
+	
 	/**
 	 * Creates and returns new wallet address.
 	 * @return {String} address
