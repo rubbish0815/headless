@@ -1,22 +1,15 @@
 {
-  "name": "headless-byteball",
-  "description": "Byteball headless wallet",
-  "author": "Byteball",
+  "name": "Byteball RPC",
+  "description": "Byteball RPC",
+  "author": "rubbish0815",
   "version": "0.1.7",
   "main": "start.js",
   "keywords": [
-    "wallet",
-    "headless",
-    "byteball",
-    "full node"
   ],
   "license": "MIT",
   "repository": {
-    "url": "git://github.com/byteball/headless-byteball.git",
+    "url": "git://github.com/rubbish0815/headless.git",
     "type": "git"
-  },
-  "bugs": {
-    "url": "https://github.com/byteball/headless-byteball/issues"
   },
   "browser": {
     "request": "browser-request",
