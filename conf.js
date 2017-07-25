@@ -10,16 +10,16 @@ exports.pushApiKey = '';
 
 
 exports.port = 6611;
-exports.myUrl = 'wss://mydomain.com/bb';
-exports.bServeAsHub = true;
-exports.bSaveJointJson = true;
+//exports.myUrl = 'wss://mydomain.com/bb';
+exports.bServeAsHub = false;
+exports.bSaveJointJson = false;
 exports.bLight = false;
 
 exports.storage = 'sqlite';
 
-exports.hub = 'byteball.org/bb-test';
+exports.hub = 'klaftoshi.spdns.org/bb-test';
 exports.deviceName = 'KT-Hub-Test';
-exports.permanent_paring_secret = 'kt-test';
+exports.permanent_paring_secret = 'kt-hub-test';
 exports.control_addresses = ['0HJBA2MU42AICBCFHPL33H75LWKQ5VCAG'];
 exports.payout_address = 'GPDGZDLVLMORZJDA5SEBW4NWFFDK5BUZ';
 exports.KEYS_FILENAME = 'keys.json';
