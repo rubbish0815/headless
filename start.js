@@ -13,6 +13,7 @@ var ecdsaSig = require('byteballcore/signature.js');
 var Mnemonic = require('bitcore-mnemonic');
 var Bitcore = require('bitcore-lib');
 var readline = require('readline');
+var logger = require('byteballcore/logger.js');
 
 var appDataDir = desktopApp.getAppDataDir();
 var KEYS_FILENAME = appDataDir + '/' + (conf.KEYS_FILENAME || 'keys.json');
@@ -22,10 +23,10 @@ var xPrivKey;
 function replaceConsoleLog(){
 	var log_filename = conf.LOG_FILENAME || (appDataDir + '/log.txt');
 	var writeStream = fs.createWriteStream(log_filename);
-	console.log('---------------');
-	console.log('From this point, output will be redirected to '+log_filename);
-	console.log("To release the terminal, type Ctrl-Z, then 'bg'");
-	console.log = function(){
+	logger.log('---------------');
+	logger.log('From this point, output will be redirected to '+log_filename);
+	logger.log("To release the terminal, type Ctrl-Z, then 'bg'");
+	logger.log = function(){
 		writeStream.write(Date().toString()+': ');
 		writeStream.write(util.format.apply(null, arguments) + '\n');
 	};
@@ -34,12 +35,12 @@ function replaceConsoleLog(){
 }
 
 function readKeys(onDone){
-	console.log('-----------------------');
+	logger.log('-----------------------');
 	if (conf.control_addresses)
-		console.log("remote access allowed from devices: "+conf.control_addresses.join(', '));
+		logger.log("remote access allowed from devices: "+conf.control_addresses.join(', '));
 	if (conf.payout_address)
-		console.log("payouts allowed to address: "+conf.payout_address);
-	console.log('-----------------------');
+		logger.log("payouts allowed to address: "+conf.payout_address);
+	logger.log('-----------------------');
 	fs.readFile(KEYS_FILENAME, 'utf8', function(err, data){
 		var rl = readline.createInterface({
 			input: process.stdin,
@@ -47,7 +48,7 @@ function readKeys(onDone){
 			//terminal: true
 		});
 		if (err){ // first start
-			console.log('failed to read keys, will gen');
+			logger.info('failed to read keys, will gen');
 			var suggestedDeviceName = require('os').hostname() || 'Headless';
 			rl.question("Please name this device ["+suggestedDeviceName+"]: ", function(deviceName){
 				if (!deviceName)
@@ -74,7 +75,7 @@ function readKeys(onDone){
 								mnemonic = new Mnemonic();
 
 							writeKeys(mnemonic.phrase, deviceTempPrivKey, devicePrevTempPrivKey, function(){
-								console.log('keys created');
+								logger.log('keys created');
 								var xPrivKey = mnemonic.toHDPrivateKey(passphrase);
 								createWallet(xPrivKey, function(){
 									onDone(mnemonic.phrase, passphrase, deviceTempPrivKey, devicePrevTempPrivKey);
@@ -253,7 +254,7 @@ setTimeout(function(){
 					throw Error("more than 1 extended_pubkey?");
 				if (rows.length === 0)
 					return setTimeout(function(){
-						console.log('passphrase is incorrect');
+						logger.err('passphrase is incorrect');
 						process.exit(0);
 					}, 1000);
 				require('byteballcore/wallet.js'); // we don't need any of its functions but it listens for hub/* messages
@@ -261,10 +262,10 @@ setTimeout(function(){
 				device.setDeviceName(conf.deviceName);
 				device.setDeviceHub(conf.hub);
 				let my_device_pubkey = device.getMyDevicePubKey();
-				console.log("====== my device address: "+my_device_address);
-				console.log("====== my device pubkey: "+my_device_pubkey);
+				logger.log("====== my device address: "+my_device_address);
+				logger.log("====== my device pubkey: "+my_device_pubkey);
 				if (conf.permanent_paring_secret)
-					console.log("====== my pairing code: "+my_device_pubkey+"@"+conf.hub+"#"+conf.permanent_paring_secret);
+					logger.log("====== my pairing code: "+my_device_pubkey+"@"+conf.hub+"#"+conf.permanent_paring_secret);
 				if (conf.bLight){
 					var light_wallet = require('byteballcore/light_wallet.js');
 					light_wallet.setLightVendorHost(conf.hub);
@@ -364,16 +365,16 @@ function handleText(from_address, text){
 
 function setupChatEventHandlers(){
 	eventBus.on('paired', function(from_address){
-		console.log('paired '+from_address);
+		logger.log('paired '+from_address);
 		if (!isControlAddress(from_address))
-			return console.log('ignoring pairing from non-control address');
+			return logger.log('ignoring pairing from non-control address');
 		handlePairing(from_address);
 	});
 
 	eventBus.on('text', function(from_address, text){
-		console.log('text from '+from_address+': '+text);
+		logger.log('text from '+from_address+': '+text);
 		if (!isControlAddress(from_address))
-			return console.log('ignoring text from non-control address');
+			return logger.log('ignoring text from non-control address');
 		handleText(from_address, text);
 	});
 }
