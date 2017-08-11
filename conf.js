@@ -25,7 +25,7 @@ exports.payout_address = 'GPDGZDLVLMORZJDA5SEBW4NWFFDK5BUZ';
 exports.KEYS_FILENAME = 'keys.json';
 
 // where logs are written to (absolute path).  Default is log.txt in app data directory
-//exports.LOG_FILENAME = 'bb_log.txt';
+//exports.LOG_FILENAME = 'log.txt';
 exports.LOG_LEVEL || 6;
 exports.LOG_LEVEL_FILE || 99;
 
