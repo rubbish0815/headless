@@ -25,9 +25,10 @@ exports.payout_address = 'GPDGZDLVLMORZJDA5SEBW4NWFFDK5BUZ';
 exports.KEYS_FILENAME = 'keys.json';
 
 // where logs are written to (absolute path).  Default is log.txt in app data directory
-//exports.LOG_FILENAME = '/dev/null';
+//exports.LOG_FILENAME = 'bb_log.txt';
 exports.LOG_LEVEL || 6;
 exports.LOG_LEVEL_FILE || 99;
+
 // this is for runnining RPC service only, see play/rpc_service.js
 exports.rpcInterface = '127.0.0.1';
 exports.rpcPort = '7777';

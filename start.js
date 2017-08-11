@@ -257,7 +257,6 @@ setTimeout(function(){
 					light_wallet.setLightVendorHost(conf.hub);
 				}
 				eventBus.emit('headless_wallet_ready');
-				setTimeout(1000);
 			});
 		});
 	});
