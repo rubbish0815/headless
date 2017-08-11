@@ -2,7 +2,7 @@
 "use strict";
 
 exports.clientName = 'KT-Hub-Test';
-exports.minClientVersion = '1.9.2';
+exports.minClientVersion = '1.9.3';
 
 //https://console.developers.google.com
 exports.pushApiProjectNumber = 0;

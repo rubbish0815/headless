@@ -20,20 +20,6 @@ var KEYS_FILENAME = appDataDir + '/' + (conf.KEYS_FILENAME || 'keys.json');
 var wallet_id;
 var xPrivKey;
 
-function replaceConsoleLog(){
-	var log_filename = conf.LOG_FILENAME || (appDataDir + '/log.txt');
-	var writeStream = fs.createWriteStream(log_filename);
-	logger.log('---------------');
-	logger.log('From this point, output will be redirected to '+log_filename);
-	logger.log("To release the terminal, type Ctrl-Z, then 'bg'");
-	logger.log = function(){
-		writeStream.write(Date().toString()+': ');
-		writeStream.write(util.format.apply(null, arguments) + '\n');
-	};
-	console.warn = console.log;
-	console.info = console.log;
-}
-
 function readKeys(onDone){
 	logger.log('-----------------------');
 	if (conf.control_addresses)
@@ -271,7 +257,7 @@ setTimeout(function(){
 					light_wallet.setLightVendorHost(conf.hub);
 				}
 				eventBus.emit('headless_wallet_ready');
-				setTimeout(replaceConsoleLog, 1000);
+				setTimeout(1000);
 			});
 		});
 	});
