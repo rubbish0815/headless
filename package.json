@@ -1,6 +1,6 @@
 {
-  "name": "BB_RPC",
-  "description": "Byteball RPC",
+  "name": "bb-rpc-test",
+  "description": "Byteball RPC Testnet",
   "author": "rubbish0815",
   "version": "0.1.7",
   "main": "start.js",
