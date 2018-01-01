@@ -1,8 +1,8 @@
 {
   "name": "bb-rpc-test",
-  "description": "Byteball RPC Testnet",
+  "description": "kt-Byteball RPC Testnet",
   "author": "rubbish0815",
-  "version": "0.1.7",
+  "version": "0.1.5",
   "main": "start.js",
   "keywords": [
   ],
