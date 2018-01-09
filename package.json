@@ -1,10 +1,14 @@
 {
-  "name": "bb-rpc-test",
-  "description": "kt-Byteball RPC Testnet",
-  "author": "byteball",
+  "name": "headless-byteball",
+  "description": "KT-Byteball headless wallet",
+  "author": "Byteball",
   "version": "0.1.9",
   "main": "start.js",
-  "keywords": [
+    "keywords": [
+    "wallet",
+    "headless",
+    "byteball",
+    "full node"
   ],
   "license": "MIT",
   "repository": {
