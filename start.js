@@ -308,9 +308,9 @@ function sendPayment(asset, amount, to_address, change_address, device_address, 
 			if (device_address) {
 				if (err)
 					device.sendMessageToDevice(device_address, 'text', "Failed to pay: " + err);
-				else
+			//	else
 				// if successful, the peer will also receive a payment notification
-					device.sendMessageToDevice(device_address, 'text', "paid");
+			//		device.sendMessageToDevice(device_address, 'text', "paid");
 			}
 			if (onDone)
 				onDone(err, unit, assocMnemonics);
@@ -461,6 +461,14 @@ function issueChangeAddress(handleAddress){
 	}
 }
 
+
+function signMessage(signing_address, message, cb) {
+	var device = require('byteballcore/device.js');
+	var Wallet = require('byteballcore/wallet.js');
+	Wallet.signMessage(signing_address, message, [device.getMyDeviceAddress()], signWithLocalPrivateKey, cb);
+}
+
+
 function handleText(from_address, text, onUnknown){
 	
 	text = text.trim();
@@ -602,6 +610,7 @@ exports.issueNextMainAddress = issueNextMainAddress;
 exports.issueOrSelectAddressByIndex = issueOrSelectAddressByIndex;
 exports.issueOrSelectStaticChangeAddress = issueOrSelectStaticChangeAddress;
 exports.issueChangeAddressAndSendPayment = issueChangeAddressAndSendPayment;
+exports.signMessage = signMessage;
 exports.setupChatEventHandlers = setupChatEventHandlers;
 exports.handlePairing = handlePairing;
 exports.handleText = handleText;

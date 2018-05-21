@@ -4,7 +4,7 @@
   "author": "Byteball",
   "version": "0.1.9",
   "main": "start.js",
-    "keywords": [
+  "keywords": [
     "wallet",
     "headless",
     "byteball",

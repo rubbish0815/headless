@@ -21,7 +21,7 @@ let count_textcoins_left = COUNT_TEXTCOINS;
 function createList(){
 	let count_textcoins_to_send = Math.min(count_textcoins_left, MAX_TEXTCOINS_PER_MESSAGE);
 	let base_outputs = [];
-	for (let i=0; i<COUNT_TEXTCOINS; i++)
+	for (let i=0; i<count_textcoins_to_send; i++)
 		base_outputs.push({address: 'textcoin:tc'+i, amount: AMOUNT+constants.TEXTCOIN_CLAIM_FEE});
 	let opts = {
 		base_outputs: base_outputs
@@ -51,3 +51,13 @@ function createList(){
 }
 
 eventBus.on('headless_wallet_ready', createList);
+
+/*
+
+Stats:
+SELECT DATE(units.creation_date) AS date, COUNT(*) 
+FROM sent_mnemonics LEFT JOIN unit_authors USING(address) LEFT JOIN units ON unit_authors.unit=units.unit
+GROUP BY date
+
+*/
+
