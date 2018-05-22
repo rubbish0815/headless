@@ -273,7 +273,7 @@ setTimeout(function(){
 					light_wallet.setLightVendorHost(conf.hub);
 				}
 				eventBus.emit('headless_wallet_ready');
-				setTimeout(replaceConsoleLog, 1000);
+				//setTimeout(replaceConsoleLog, 1000);
 				if (conf.MAX_UNSPENT_OUTPUTS && conf.CONSOLIDATION_INTERVAL){
 					var consolidation = require('./consolidation.js');
 					var network = require('byteballcore/network.js');
